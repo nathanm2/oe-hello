@@ -1,0 +1,4 @@
+*.swp
+bitbake.lock
+tmp
+bitbake
