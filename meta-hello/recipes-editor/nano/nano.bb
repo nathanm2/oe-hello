@@ -4,8 +4,8 @@ PN = "nano"
 PV = "2.2.6"
 
 SITE = "http://www.nano-editor.org/dist"
-PV_MAJOR = "${@bb.data.getVar('PV',d,1).split('.')[0]}"
-PV_MINOR = "${@bb.data.getVar('PV',d,1).split('.')[1]}"
+PV_MAJOR = "${@d.getVar('PV',d,1).split('.')[0]}"
+PV_MINOR = "${@d.getVar('PV',d,1).split('.')[1]}"
 
 SRC_URI = "${SITE}/v${PV_MAJOR}.${PV_MINOR}/${PN}-${PV}.tar.gz"
 SRC_URI[md5sum] = "03233ae480689a008eb98feb1b599807"
@@ -27,26 +27,26 @@ python do_fetch() {
 
 addtask fetch before do_build
 
-python do_unpack() {
-    bb.plain("Unpacking source tarball ...")
-    os.system("tar x -C ${WORKDIR} -f ${DL_DIR}/${P}.tar.gz")
-    bb.plain("Unpacked source tarball.")
+do_unpack() {
+    bbnote "Unpacking source tarball ..."
+    tar x -C ${WORKDIR} -f ${DL_DIR}/${P}.tar.gz
+    bbnote "Unpacked source tarball."
 }
 
 addtask unpack before do_build after do_fetch
 
-python do_configure() {
-    bb.plain("Configuring source package ...")
-    os.system("cd ${WORKDIR}/${P} && ./configure")
-    bb.plain("Configured source package.")
+do_configure() {
+    bbnote "Configuring source package ..."
+    cd ${WORKDIR}/${P} && ./configure
+    bbnote "Configured source package."
 }
 
 addtask configure before do_build after do_unpack
 
-python do_compile() {
-    bb.plain("Compiling package...")
-    os.system("cd ${WORKDIR}/${P} && make")
-    bb.plain("Compiled package.")
+do_compile() {
+    bbnote "Compiling package..."
+    cd ${WORKDIR}/${P} && make
+    bbnote "Compiled package."
 }
 
 addtask compile before do_build after do_configure

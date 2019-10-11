@@ -2,3 +2,4 @@
 bitbake.lock
 tmp
 bitbake
+bitbake-cookerdaemon.log
